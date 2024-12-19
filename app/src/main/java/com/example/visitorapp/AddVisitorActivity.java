@@ -13,6 +13,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
 public class AddVisitorActivity extends AppCompatActivity {
     EditText et1,et2,et3,et4;
     Button bt1,bt2;
@@ -39,6 +46,39 @@ public class AddVisitorActivity extends AppCompatActivity {
                 str2=et2.getText().toString();
                 str3=et3.getText().toString();
                 str4=et4.getText().toString();
+
+                if(str1.isEmpty() | str2.isEmpty() | str3.isEmpty() | str4.isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(),"All fields are mandatory !",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    callApi();
+                }
+            }
+
+            private void callApi() {
+                String apiUrl="https://log-app-demo-api.onrender.com/addvisitor";
+                JSONObject data=new JSONObject();
+                try {
+                    data.put("firstname",str1);
+                    data.put("lastname",str2);
+                    data.put("purpose",str3);
+                    data.put("whomToMeet",str4);
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+                JsonObjectRequest request =new JsonObjectRequest(
+                        Request.Method.POST,
+                        apiUrl,data,
+                        response -> Toast.makeText(getApplicationContext(),"Successfully Added",Toast.LENGTH_LONG).show(),
+                        error -> Toast.makeText(getApplicationContext(),"Error Occurred",Toast.LENGTH_LONG).show()
+                );
+
+                RequestQueue Queue= Volley.newRequestQueue(getApplicationContext());
+                Queue.add(request);
 
             }
         });

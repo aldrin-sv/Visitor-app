@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         btn1=(Button) findViewById(R.id.bt1);
         btn2=(Button) findViewById(R.id.bt2);
 
-        btn1.setOnClickListener(new View.OnClickListener() {
+        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent ob1=new Intent(getApplicationContext(), AddVisitorActivity.class);
